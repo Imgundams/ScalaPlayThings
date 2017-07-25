@@ -3,16 +3,51 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET        /                       controllers.Application.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file           controllers.Assets.at(path="/public", file)
+GET        /map                    controllers.Application.map()
 
-GET     /404                       controllers.Application.brokenLink()
+GET        /404                    controllers.Application.brokenLink()
+GET        /bootstrap              controllers.Application.boot()
 
-GET     /hello/:name                controllers.Application.hello(name :String)
+# Default pages
+GET        /redirect               controllers.Default.redirect(to = "http://www.google.com")
+GET        /notfound               controllers.Default.notFound
+GET        /error                  controllers.Default.error
+GET        /todo                   controllers.Default.todo
 
-POST    /something                           controllers.Application.someCreate()
-GET     /something/:id                       controllers.Application.someEdit(id:String)
-POST    /something/:id                       controllers.Application.someUpdate(id:String)
-POST    /something/:id                       controllers.Application.someDelete(id:String)
+GET        /hello/:name            controllers.Application.hello(name: String)
+
+
+GET        /static                 controllers.Application.static()
+
+GET        /dynamic/:string        controllers.Application.dynamic(string: String)
+GET        /dynamic                controllers.Application.dynamic(string: String ?= "write /something in the url")
+GET        /option                 controllers.Application.option(string: Option[String])
+GET        /reverseRoute/          controllers.Application.reverseRoute()
+GET        /sameStatic             controllers.Application.static()
+GET        /sameIndex              controllers.Application.index()
+GET        /forevertodo            controllers.Application.foreverTodo()
+
+# Cookies
+GET        /cookie                 controllers.Application.cookie()
+GET        /eatCookie              controllers.Application.eatCookie()
+GET        /showMeTheCookie        controllers.Application.showMeTheCookie()
+
+# Sessions
+GET        /session                controllers.Application.session()
+GET        /sessionPlease          controllers.Application.sessionPlease()
+
+
+
+
+#GET     /sessions                         controllers.Cookies.addSession
+#GET     /flash                             controllers.Cookies.flashSession
+
+
+#POST    /something                           controllers.Application.someCreate()
+#GET     /something/:id                       controllers.Application.someEdit(id:String)
+#POST    /something/:id                       controllers.Application.someUpdate(id:String)
+#POST    /something/:id                       controllers.Application.someDelete(id:String)
