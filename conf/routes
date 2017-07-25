@@ -39,12 +39,8 @@ GET        /showMeTheCookie        controllers.Application.showMeTheCookie()
 # Sessions
 GET        /session                controllers.Application.session()
 GET        /sessionPlease          controllers.Application.sessionPlease()
-
-
-
-
-#GET     /sessions                         controllers.Cookies.addSession
-#GET     /flash                             controllers.Cookies.flashSession
+# Flash                    
+#GET     /flash                             controllers.Cookies.flashSession()
 
 
 #POST    /something                           controllers.Application.someCreate()
