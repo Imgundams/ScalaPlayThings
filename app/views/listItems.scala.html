@@ -1,0 +1,27 @@
+@(items: Seq[Item], form: Form[Item])(implicit messages: Messages)
+
+@main("Items") {
+
+    <h1>Items</h1><br>
+    <table align="center" >
+        <thead>
+            <tr><th>Name</th><th>Price</th>
+        </thead>
+        <tbody>
+        @for(item <- items) {
+            <tr><td>@item.name</td>
+                <td>@item.price</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+    @helper.form(routes.Application.createItem()) {
+        @helper.inputText(form("name"), 'id -> "SomeId", 'class -> "SomeClass")
+        @helper.inputText(form("price"))
+        <button type="submit">Create Item</button>
+    }
+
+
+}

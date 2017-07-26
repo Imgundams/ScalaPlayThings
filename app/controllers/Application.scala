@@ -2,6 +2,9 @@ package controllers
 
 
 import play.api.mvc._
+import play.api.Play._
+import play.api.i18n.Messages.Implicits._
+import models.Item
 
 class Application extends Controller {
 
@@ -28,8 +31,8 @@ class Application extends Controller {
   }
 
   // -- hello
-  def hello(name: String) = Action {
-    Ok(views.html.hello("Hello " + name)).withCookies(Cookie("Cookie", "Yummy"))
+  def hello(name: Option[String]) = Action {
+    Ok(views.html.hello(name)).withCookies(Cookie("Cookie", "Yummy"))
   }
 
   def static() = Action {
@@ -45,8 +48,8 @@ class Application extends Controller {
     Ok(views.html.option("Here is an option page, write \"?string=something\" in the url", string))
   }
 
-  def reverseRoute() = Action { implicit request: Request =>
-    Redirect(routes.Application.hello("You"))
+  def reverseRoute() = Action {
+    Redirect(routes.Application.index())
   }
 
 
@@ -81,34 +84,44 @@ class Application extends Controller {
 
   // Session
 
-  def sessionPlease()= Action {
-    Ok("You are Welcome!").withSession("connected"-> "Imgundams@gmail.com")
+  def sessionPlease() = Action {
+    Ok("You are Welcome!").withSession("connected" -> "Imgundams@gmail.com")
   }
 
-  def session() =Action { request =>
+  def session() = Action { request =>
     request.session.get("connected").map { user =>
-      Ok("Welcome "+ user)
+      Ok("Welcome " + user)
     }.getOrElse {
       Unauthorized(views.html.leave("Get out of here!"))
     }
   }
-  def leaveSession() = Action{
+
+  def leaveSession() = Action {
     Ok("You are logged out").withNewSession
   }
 
   // flash
 
-def flashSession() = Action { implicit request: Request=>
-     Redirect("/hello").flashing("set" -> "true", "success" -> "good job")
+  def flashSession() = Action {
+    Redirect("/static").flashing("set" -> "true", "success" -> "good job")
   }
 
-def flashRedirect() = Action { implicit request: Request[AnyContent] =>
-    Ok {
-      views.html.hello(request.flash.get("success").getOrElse("Welcome!"), views.html.("good")
-    }
+  def listItems() = Action {implicit request =>
+    Ok(views.html.listItems(Item.Items, Item.createItemForm))
   }
 
+  // Items
 
+  def createItem = Action { implicit request =>
+
+    val formValidationResult = Item.createItemForm.bindFromRequest
+    formValidationResult.fold({ formWithErrors =>
+      BadRequest(views.html.listItems(Item.Items, formWithErrors))
+    }, { item =>
+      Item.Items.append(item)
+      Redirect(routes.Application.listItems())
+    })
+  }
 
 
   // TODO Functions
