@@ -1,7 +1,6 @@
 package controllers
 
 
-import com.sun.xml.internal.bind.v2.TODO
 import play.api.mvc._
 
 class Application extends Controller {
@@ -46,7 +45,7 @@ class Application extends Controller {
     Ok(views.html.option("Here is an option page, write \"?string=something\" in the url", string))
   }
 
-  def reverseRoute() = Action {
+  def reverseRoute() = Action { implicit request: Request =>
     Redirect(routes.Application.hello("You"))
   }
 
@@ -83,7 +82,7 @@ class Application extends Controller {
   // Session
 
   def sessionPlease()= Action {
-    Ok("You are Welcome!").withSession("connected"-> "user@gmail.com")
+    Ok("You are Welcome!").withSession("connected"-> "Imgundams@gmail.com")
   }
 
   def session() =Action { request =>
@@ -91,6 +90,21 @@ class Application extends Controller {
       Ok("Welcome "+ user)
     }.getOrElse {
       Unauthorized(views.html.leave("Get out of here!"))
+    }
+  }
+  def leaveSession() = Action{
+    Ok("You are logged out").withNewSession
+  }
+
+  // flash
+
+def flashSession() = Action { implicit request: Request=>
+     Redirect("/hello").flashing("set" -> "true", "success" -> "good job")
+  }
+
+def flashRedirect() = Action { implicit request: Request[AnyContent] =>
+    Ok {
+      views.html.hello(request.flash.get("success").getOrElse("Welcome!"), views.html.("good")
     }
   }
 
