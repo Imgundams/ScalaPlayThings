@@ -85,19 +85,19 @@ class Application extends Controller {
   // Session
 
   def sessionPlease() = Action {
-    Ok("You are Welcome!").withSession("connected" -> "Imgundams@gmail.com")
+    Ok(views.html.welcome("Logged in")).withSession("connected" -> "Imgundams@gmail.com")
   }
 
   def session() = Action { request =>
     request.session.get("connected").map { user =>
-      Ok("Welcome " + user)
+      Ok(views.html.welcome("You are Logged in!"))
     }.getOrElse {
       Unauthorized(views.html.leave("Get out of here!"))
     }
   }
 
   def leaveSession() = Action {
-    Ok("You are logged out").withNewSession
+    Ok(views.html.welcome("You are logged out")).withNewSession
   }
 
   // flash
@@ -106,22 +106,54 @@ class Application extends Controller {
     Redirect("/static").flashing("set" -> "true", "success" -> "good job")
   }
 
-  def listItems() = Action {implicit request =>
-    Ok(views.html.listItems(Item.Items, Item.createItemForm))
-  }
 
   // Items
+
+  def listItems() = Action { request =>
+    request.session.get("connected").map { user =>
+      Ok(views.html.listItemsAdmin(Item.Items, Item.createItemForm))
+    }.getOrElse {
+      Unauthorized(views.html.listItems(Item.Items, Item.createItemForm))
+    }
+  }
 
   def createItem = Action { implicit request =>
 
     val formValidationResult = Item.createItemForm.bindFromRequest
     formValidationResult.fold({ formWithErrors =>
-      BadRequest(views.html.listItems(Item.Items, formWithErrors))
+      BadRequest(views.html.listItemsAdmin(Item.Items, formWithErrors))
     }, { item =>
       Item.Items.append(item)
       Redirect(routes.Application.listItems())
     })
   }
+
+
+  def edit() = Action { implicit request =>
+    request.session.get("connected").map { user =>
+    Ok(views.html.edit(Item.Items, Item.createItemForm.fill(Item.Items.head)))
+    }.getOrElse {
+      Unauthorized(views.html.listItems(Item.Items, Item.createItemForm))
+    }
+  }
+
+  def editItem(index :Int)= Action{ implicit request =>
+//    val indexToUse = index.getOrElse(-1)
+    val formValidationResult = Item.createItemForm.bindFromRequest
+    formValidationResult.fold({ formWithErrors =>
+      BadRequest(views.html.listItemsAdmin(Item.Items,formWithErrors))
+    }, { item =>
+
+      Item.Items.update(index,item)
+      Redirect(routes.Application.listItems())
+    }
+    )
+  }
+
+  def delete = TODO
+
+
+
 
 
   // TODO Functions

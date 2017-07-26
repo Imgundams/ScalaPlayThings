@@ -31,6 +31,21 @@
     </table>
     <hr/>
 
+    @helper.form(routes.Application.createItem()) {
+        @helper.inputText(form("itemName"), 'id -> "SomeId",'_showConstraints -> false, 'class -> "SomeClass", 'placeholder -> "*itemName")
+        @helper.inputText(form("description"),'placeholder -> "description",'_showConstraints -> false)
+        @helper.inputText(form("maker"),'placeholder -> "*maker",'_showConstraints -> false)
+        @helper.inputText(form("warranty"),'placeholder -> "warranty",'_showConstraints -> false)
+        @helper.inputText(form("price"),'_showConstraints -> false,'placeholder -> "*Price")
+        @helper.inputText(form("discount"),'placeholder -> "discount",'_showConstraints -> false)
+        @helper.inputText(form("seller"),'placeholder -> "*seller",'_showConstraints -> false)
+        @helper.inputText(form("picture"),'placeholder -> "picture",'_showConstraints -> false)
+        <h4 style="color:red;text-align:center">* indicates required field</h4>
+        <button type="submit">Create Item</button>
+    }
+    <br><a href="@routes.Application.edit()">Edit<br></a>
+
+
 
 
 }
