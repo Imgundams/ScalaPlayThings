@@ -1,51 +1,58 @@
 @(items: Seq[Item], form: Form[Item])(implicit messages: Messages)
 
-@main("Items") {
+    @main("Items") {
 
-    <h1>Items</h1><br>
-    <table  class="table-hover table-inverse" align="center" style="width:100%; background-color: #dcdcdc">
-        <thead>
-            <tr><th>Index</th><th>itemName</th><th>description</th><th>maker</th>
-                <th>warranty</th><th>price</th><th>discount</th>
-                <th>seller</th><th>picture</th>
-        </thead>
-        <tbody>
-        @for(item <- items) {
-            <tr>
-                <td>@items.indexWhere(i => i == item)</td>
-                <td>@item.itemName</td>
-                <td>@item.description</td>
-                <td>@item.maker</td>
-                <td>@item.warranty</td>
-                <td>@item.price</td>
-                <td>@item.discount</td>
-                <td>@item.seller</td>
-                @if(item.picture == "no picture"){
-                <td><a><img src="@routes.Assets.at("images/noimage.png")" style="width: 75px; height: auto"> </a> </td></tr>
-
-        } else{
-                <td><a><img src="@item.picture" style="width: 60px; height: auto"> </a> </td></tr>
+        <h1>Items</h1>
+        <br>
+        <table class="table-hover table-inverse" align="center" style="width: 100%;
+            background-color: #dcdcdc">
+            <thead style="align-content: center">
+                <tr><th>Index</th><th>Item Name</th><th>Description</th><th>Manufacturer</th>
+                    <th>Warranty</th><th>Price</th><th>Discount</th>
+                    <th>Seller</th><th>Picture</th><th>Edit</th><th>Delete</th>
+            </thead>
+            <tbody>
+            @for(item <- items) {
+                <tr>
+                    <td>@items.indexWhere(i => i == item)</td>
+                    <td>@item.itemName</td>
+                    <td>@item.description</td>
+                    <td>@item.maker</td>
+                    <td>@item.warranty</td>
+                    <td>@item.price</td>
+                    <td>@item.discount</td>
+                    <td>@item.seller</td>
+                    @if(item.picture == "no picture") {
+                        <td><a><img src="@routes.Assets.at("images/noimage.png")" style="width: 75px;
+                            height: auto"> </a> </td>
+                    } else{
+                        <td><a><img src="@item.picture" style="width: 60px;height: auto"> </a></td>
+                    }
+                    <td><a href="@routes.Application.edit(items.indexWhere(i => i == item))">
+                        <img src="@routes.Assets.at("images/edit.png")" style="width: 25px;
+                        height: auto"></a></td>
+                    <td><a href="@routes.Application.delete(items.indexWhere(i => i == item))">
+                        <img src="@routes.Assets.at("images/cross.png")" style="width: 25px;
+                        height: auto"></a></td>
+                </tr>
             }
+            </tbody>
+        </table>
+        <hr/>
+
+        @helper.form(routes.Application.createItem()) {
+            @helper.inputText(form("itemName"), 'id -> "SomeId", '_showConstraints -> false, 'class -> "SomeClass", 'placeholder -> "*itemName",'_label ->"Item Name")
+            @helper.inputText(form("description"), 'placeholder -> "description", '_showConstraints -> false,'_label ->"Description")
+            @helper.inputText(form("maker"), 'placeholder -> "*maker", '_showConstraints -> false,'_label ->"Manufacturer")
+            @helper.inputText(form("warranty"), 'placeholder -> "warranty", '_showConstraints -> false ,'_label ->"Warranty")
+            @helper.inputText(form("price"), '_showConstraints -> false, 'placeholder -> "*Price",'_label ->"Market Price")
+            @helper.inputText(form("discount"), 'placeholder -> "discount", '_showConstraints -> false,'_label ->"Discount")
+            @helper.inputText(form("seller"), 'placeholder -> "*seller", '_showConstraints -> false,'_label ->"Seller")
+            @helper.inputText(form("picture"), 'placeholder -> "picture", '_showConstraints -> false,'_label ->"Picture")
+            <h4 style="color: red;
+                text-align: center">* indicates required field</h4>
+            <button type="submit">Create Item</button>
         }
-        </tbody>
-    </table>
-    <hr/>
 
-    @helper.form(routes.Application.createItem()) {
-        @helper.inputText(form("itemName"), 'id -> "SomeId",'_showConstraints -> false, 'class -> "SomeClass", 'placeholder -> "*itemName")
-        @helper.inputText(form("description"),'placeholder -> "description",'_showConstraints -> false)
-        @helper.inputText(form("maker"),'placeholder -> "*maker",'_showConstraints -> false)
-        @helper.inputText(form("warranty"),'placeholder -> "warranty",'_showConstraints -> false)
-        @helper.inputText(form("price"),'_showConstraints -> false,'placeholder -> "*Price")
-        @helper.inputText(form("discount"),'placeholder -> "discount",'_showConstraints -> false)
-        @helper.inputText(form("seller"),'placeholder -> "*seller",'_showConstraints -> false)
-        @helper.inputText(form("picture"),'placeholder -> "picture",'_showConstraints -> false)
-        <h4 style="color:red;text-align:center">* indicates required field</h4>
-        <button type="submit">Create Item</button>
+
     }
-    <br><a href="@routes.Application.edit()">Edit<br></a>
-
-
-
-
-}

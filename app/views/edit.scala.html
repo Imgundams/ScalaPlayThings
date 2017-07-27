@@ -1,4 +1,4 @@
-@(items: Seq[Item], form: Form[Item])(implicit messages: Messages)
+@(items: Seq[Item], form: Form[Item],index:Int)(implicit messages: Messages)
 
 @main("Edit page") {
 
@@ -7,9 +7,9 @@
     <h1>Items</h1><br>
     <table  class="table-hover table-inverse" align="center" style="width:100%; background-color: #dcdcdc">
         <thead>
-            <tr><th>Index</th><th>itemName</th><th>description</th><th>maker</th>
-                <th>warranty</th><th>price</th><th>discount</th>
-                <th>seller</th><th>picture</th>
+            <tr><th>Index</th><th>Item Name</th><th>Description</th><th>Manufacturer</th>
+                <th>Warranty</th><th>Price</th><th>Discount</th>
+                <th>Seller</th><th>Picture</th>
         </thead>
         <tbody>
         @for(item <- items) {
@@ -38,16 +38,16 @@
     }
     </select>
     <hr/>
-    @helper.form(routes.Application.editItem(1)) {
-        @helper.inputText(form("itemName"), 'id -> "SomeId", '_showConstraints -> false, 'class -> "SomeClass", 'placeholder -> "*itemName")
-        @helper.inputText(form("description"), 'placeholder -> "description", '_showConstraints -> false)
-        @helper.inputText(form("maker"), 'placeholder -> "*maker", '_showConstraints -> false)
-        @helper.inputText(form("warranty"), 'placeholder -> "warranty", '_showConstraints -> false)
-        @helper.inputText(form("price"), '_showConstraints -> false, 'placeholder -> "*Price")
-        @helper.inputText(form("discount"), 'placeholder -> "discount", '_showConstraints -> false)
-        @helper.inputText(form("seller"), 'placeholder -> "*seller", '_showConstraints -> false)
-        @helper.inputText(form("picture"), 'placeholder -> "picture", '_showConstraints -> false)
-        <h4 style="color: red;
+    @helper.form(routes.Application.editItem(index)) {
+        @helper.inputText(form("itemName"), 'id -> "SomeId", '_showConstraints -> false, 'class -> "SomeClass", 'placeholder -> "*itemName",'_label ->"Item Name")
+        @helper.inputText(form("description"), 'placeholder -> "description", '_showConstraints -> false,'_label ->"Description")
+        @helper.inputText(form("maker"), 'placeholder -> "*maker", '_showConstraints -> false,'_label ->"Manufacturer")
+        @helper.inputText(form("warranty"), 'placeholder -> "warranty", '_showConstraints -> false ,'_label ->"Warranty")
+        @helper.inputText(form("price"), '_showConstraints -> false, 'placeholder -> "*Price",'_label ->"Market Price")
+        @helper.inputText(form("discount"), 'placeholder -> "discount", '_showConstraints -> false,'_label ->"Discount")
+        @helper.inputText(form("seller"), 'placeholder -> "*seller", '_showConstraints -> false,'_label ->"Seller")
+        @helper.inputText(form("picture"), 'placeholder -> "picture", '_showConstraints -> false,'_label ->"Picture")
+        <h4 style="color: rgba(255, 0, 0, 0.75);
             text-align: center">* indicates required field</h4>
         <button type="submit">Edit Item</button>
 

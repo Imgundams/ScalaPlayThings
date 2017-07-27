@@ -4,6 +4,7 @@
 
 # Home page
 GET         /                                     controllers.Application.index
+GET         /help                                 controllers.Application.help
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                         controllers.Assets.at(path="/public", file)
@@ -18,7 +19,7 @@ GET         /notfound                             controllers.Default.notFound
 GET         /error                                controllers.Default.error
 GET         /todo                                 controllers.Default.todo
 
-GET         /hello                                controllers.Application.hello(name: Option[String])
+GET         /hello/$name<[a-zA-Z0-9]+>            controllers.Application.hello(name: String)
 
 GET         /static                               controllers.Application.static()
 
@@ -46,18 +47,20 @@ GET         /flash                                controllers.Application.flashS
 # Items
 
 GET         /items                                controllers.Application.listItems()
-#POST        /items                    controllers.Application.createItem
+#POST        /items                               controllers.Application.createItem
 
 GET         /itemsadmin                           controllers.Application.listItems()
 POST        /itemsadmin                           controllers.Application.createItem()
 
 
-GET         /edit/                             controllers.Application.edit()
-POST        /edit/:index                           controllers.Application.editItem(index:Int)
-GET         /delete                               controllers.Application.delete()
+GET         /edit/:index                          controllers.Application.edit(index:Int)
+POST        /edit/:index                          controllers.Application.editItem(index:Int)
+GET         /delete/:index                        controllers.Application.delete(index:Int)
 
+GET         /createperson                         controllers.ApplicationMongo.create
+GET         /findperson                           controllers.ApplicationMongo.findByName
 
-#POST    /something                           controllers.Application.someCreate()
-#GET     /something/:id                       controllers.Application.someEdit(id:String)
-#POST    /something/:id                       controllers.Application.someUpdate(id:String)
-#POST    /something/:id                       controllers.Application.someDelete(id:String)
+#POST    /something                              controllers.Application.someCreate()
+#GET     /something/:id                          controllers.Application.someEdit(id:String)
+#POST    /something/:id                          controllers.Application.someUpdate(id:String)
+#POST    /something/:id                          controllers.Application.someDelete(id:String)

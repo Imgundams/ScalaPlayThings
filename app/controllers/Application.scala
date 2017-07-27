@@ -1,6 +1,5 @@
 package controllers
 
-
 import play.api.mvc._
 import play.api.Play._
 import play.api.i18n.Messages.Implicits._
@@ -8,8 +7,13 @@ import models.Item
 
 class Application extends Controller {
 
+
   def index = Action {
     Ok(views.html.index("Hello World.")).withCookies(Cookie("Cookie", "Not_tasty"))
+  }
+
+  def help = Action {
+    Ok(views.html.playframework("Play Framework Help"))
   }
 
   // -- Page not found
@@ -31,9 +35,14 @@ class Application extends Controller {
   }
 
   // -- hello
-  def hello(name: Option[String]) = Action {
-    Ok(views.html.hello(name)).withCookies(Cookie("Cookie", "Yummy"))
-  }
+  def hello(name: String) =
+    Action {
+      if (name.isEmpty) {
+        Ok(views.html.hello("Stranger")).withCookies(Cookie("Cookie", "Yummy"))
+      }
+      else
+        Ok(views.html.hello(name)).withCookies(Cookie("Cookie", "Yummy"))
+    }
 
   def static() = Action {
     Ok(views.html.static("Here is a static page")).withCookies(Cookie("Cookie", "Very_tasty"))
@@ -129,47 +138,35 @@ class Application extends Controller {
   }
 
 
-  def edit() = Action { implicit request =>
-    request.session.get("connected").map { user =>
-    Ok(views.html.edit(Item.Items, Item.createItemForm.fill(Item.Items.head)))
-    }.getOrElse {
-      Unauthorized(views.html.listItems(Item.Items, Item.createItemForm))
+  def edit(index: Int) = Action { implicit request =>
+
+    if (index > Item.Items.length) {
+      Redirect(routes.Application.brokenLink())
+    } else {
+      request.session.get("connected").map { user =>
+        Ok(views.html.edit(Item.Items, Item.createItemForm.fill(Item.Items(index)), index))
+      }.getOrElse {
+        Unauthorized(views.html.listItems(Item.Items, Item.createItemForm))
+      }
     }
   }
 
-  def editItem(index :Int)= Action{ implicit request =>
-//    val indexToUse = index.getOrElse(-1)
-    val formValidationResult = Item.createItemForm.bindFromRequest
-    formValidationResult.fold({ formWithErrors =>
-      BadRequest(views.html.listItemsAdmin(Item.Items,formWithErrors))
+  def editItem(index: Int) = Action { implicit request =>
+    //    val indexToUse = index.getOrElse(-1)
+    val formResult = Item.createItemForm.bindFromRequest
+    formResult.fold({ formWithErrors =>
+      BadRequest(views.html.listItemsAdmin(Item.Items, formWithErrors))
     }, { item =>
 
-      Item.Items.update(index,item)
+      Item.Items.update(index, item)
       Redirect(routes.Application.listItems())
     }
     )
   }
 
-  def delete = TODO
-
-
-
-
-
-  // TODO Functions
-  def someEdit(id: String) = Action {
-    Ok(s"The id given here is: $id")
+  def delete(index: Int) = Action { implicit request =>
+    Item.Items.remove(index)
+    Redirect(routes.Application.listItems())
   }
 
-  def someCreate() = Action {
-    Ok("The id given here is nothing")
-  }
-
-  def someUpdate(id: String) = Action {
-    Ok(s"The id given here is: $id")
-  }
-
-  def someDelete(id: String) = Action {
-    Ok(s"The id given here is: $id")
-  }
 }

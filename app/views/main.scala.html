@@ -13,6 +13,7 @@
         <meta name="author" content="">
 
         <title>@title</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet"href="@routes.Assets.at("/bootstrap/vendor/bootstrap/css/bootstrap.css")">
         <script type='text/javascript' src='@routes.Assets.at("/bootstrap/vendor/bootstrap/js/bootstrap.js")'></script>
         <link href="@routes.Assets.at("bootstrap/css/grayscale.min.css")" rel="stylesheet">
@@ -47,22 +48,22 @@
                             <a href="#"></a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="session">session</a>
+                            <a class="page-scroll" href="http://localhost:9000/session">session</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="404">404</a>
+                            <a class="page-scroll" href="http://localhost:9000/404">404</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="showmethecookie">Cookie</a>
+                            <a class="page-scroll" href="http://localhost:9000/showmethecookie">Cookie</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="items">Items</a>
+                            <a class="page-scroll" href="http://localhost:9000/items">Items</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="sessionplease">Login</a>
+                            <a class="page-scroll" href="http://localhost:9000/sessionplease">Login</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="sessionleave">Logout</a>
+                            <a class="page-scroll" href="http://localhost:9000/sessionleave">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -79,8 +80,8 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <h1 class="brand-heading">@title</h1>
-                            <p class="intro-text">Scala ↓ play. </p>
-                            <a href="#about" class="btn btn-circle page-scroll">
+                            <p class="intro-text">Scala ↓ play~ </p>
+                            <a href="#mainpart" class="btn btn-circle page-scroll">
                                 <i class="fa fa-angle-double-down animated"></i>
                             </a>
                         </div>
@@ -91,7 +92,7 @@
 
 
             <!-- About Section -->
-        <section id="about" class="container content-section text-center">
+        <section id="mainpart" class="container content-section text-center">
             <div class="row">
                 @content
             </div>

@@ -6,9 +6,9 @@ import play.api.data.Forms._
 import scala.collection.mutable.ArrayBuffer
 import controllers.Application
 import views.html.helper.inputFile
+
 case class Item(itemName: String, description: String, maker: String,
                 warranty: String, price: Int, discount: String, seller: String, picture: String)
-
 
 object Item {
 
