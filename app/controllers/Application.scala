@@ -9,7 +9,8 @@ class Application extends Controller {
 
 
   def index = Action {
-    Ok(views.html.index("Hello World.")).withCookies(Cookie("Cookie", "Not_tasty"))
+    Ok(
+      views.html.index("Hello World.")).withCookies(Cookie("Cookie", "Not_tasty", Option(10800)))
   }
 
   def help = Action {
@@ -19,7 +20,7 @@ class Application extends Controller {
   // -- Page not found
 
   def brokenLink = Action { implicit request =>
-    NotFound(views.html.pageNotFound()).withCookies(Cookie("Cookie", "Kind_of_tasty"))
+    NotFound(views.html.pageNotFound()).withCookies(Cookie("Cookie", "Kind_of_tasty", Option(10800)))
   }
 
   val echo = Action { request =>
@@ -38,14 +39,14 @@ class Application extends Controller {
   def hello(name: String) =
     Action {
       if (name.isEmpty) {
-        Ok(views.html.hello("Stranger")).withCookies(Cookie("Cookie", "Yummy"))
+        Ok(views.html.hello("Stranger")).withCookies(Cookie("Cookie", "Yummy", Option(10800)))
       }
       else
-        Ok(views.html.hello(name)).withCookies(Cookie("Cookie", "Yummy"))
+        Ok(views.html.hello(name)).withCookies(Cookie("Cookie", "Yummy", Option(10800)))
     }
 
   def static() = Action {
-    Ok(views.html.static("Here is a static page")).withCookies(Cookie("Cookie", "Very_tasty"))
+    Ok(views.html.static("Here is a static page")).withCookies(Cookie("Cookie", "Very_tasty", Option(10800)))
   }
 
   def dynamic(string: String) = Action {
@@ -67,7 +68,7 @@ class Application extends Controller {
   //  Cookies
   def cookie() = Action {
     //        Ok(views.html.cookies("Eat your cookies!")).withCookies(Cookie("Chocolate Chip","Not tasty"))
-    Ok(views.html.cookieForYou("Eat your cookies!")).withCookies(Cookie("Cookie", "Nasty"))
+    Ok(views.html.cookieForYou("Eat your cookies!")).withCookies(Cookie("Cookie", "Nasty", Option(10800)))
   }
 
   def showMeTheCookie() = Action {
