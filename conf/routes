@@ -60,6 +60,20 @@ GET         /delete/:index                        controllers.Application.delete
 GET         /createperson                         controllers.ApplicationMongo.create
 GET         /findperson                           controllers.ApplicationMongo.findByName
 
+
+# Comet
+
+GET         /comet                                controllers.Application.cometString
+GET         /cometjs                              controllers.Application.cometJson
+
+GET         /scala/comet                          controllers.Application.clocker()
+GET         /scala/comet/liveClock                controllers.Application.streamClock()
+
+# Upload
+
+POST        /upload                               controllers.Application.upload
+
+
 #POST    /something                              controllers.Application.someCreate()
 #GET     /something/:id                          controllers.Application.someEdit(id:String)
 #POST    /something/:id                          controllers.Application.someUpdate(id:String)
