@@ -3,16 +3,78 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET         /                                     controllers.Application.index
+GET         /help                                 controllers.Application.help
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                         controllers.Assets.at(path="/public", file)
+GET         /map                                  controllers.Application.map()
 
-GET     /404                       controllers.Application.brokenLink()
+GET         /404                                  controllers.Application.brokenLink()
+GET         /bootstrap                            controllers.Application.boot()
 
-GET     /hello/:name                controllers.Application.hello(name :String)
+# Default pages
+GET         /redirect                             controllers.Default.redirect(to = "http://www.google.com")
+GET         /notfound                             controllers.Default.notFound
+GET         /error                                controllers.Default.error
+GET         /todo                                 controllers.Default.todo
 
-POST    /something                           controllers.Application.someCreate()
-GET     /something/:id                       controllers.Application.someEdit(id:String)
-POST    /something/:id                       controllers.Application.someUpdate(id:String)
-POST    /something/:id                       controllers.Application.someDelete(id:String)
+GET         /hello/$name<[a-zA-Z0-9]+>            controllers.Application.hello(name: String)
+
+GET         /static                               controllers.Application.static()
+
+GET         /dynamic/$string<[a-zA-Z0-9]+>        controllers.Application.dynamic(string: String)
+GET         /dynamic                              controllers.Application.dynamic(string: String ?= "write /something in the url")
+GET         /option                               controllers.Application.option(string: Option[String])
+GET         /reverseroute/                        controllers.Application.reverseRoute()
+GET         /samestatic                           controllers.Application.static()
+GET         /sameindex                            controllers.Application.index()
+GET         /forevertodo                          controllers.Application.foreverTodo()
+
+# Cookies
+GET         /cookie                               controllers.Application.cookie()
+GET         /eatcookie                            controllers.Application.eatCookie()
+GET         /showmethecookie                      controllers.Application.showMeTheCookie()
+
+# Sessions
+GET         /session                              controllers.Application.session()
+GET         /sessionplease                        controllers.Application.sessionPlease()
+GET         /sessionleave                         controllers.Application.leaveSession()
+
+# Flash                    
+GET         /flash                                controllers.Application.flashSession()
+
+# Items
+
+GET         /items                                controllers.Application.listItems()
+#POST        /items                               controllers.Application.createItem
+
+GET         /itemsadmin                           controllers.Application.listItems()
+POST        /itemsadmin                           controllers.Application.createItem()
+
+
+GET         /edit/:index                          controllers.Application.edit(index:Int)
+POST        /edit/:index                          controllers.Application.editItem(index:Int)
+GET         /delete/:index                        controllers.Application.delete(index:Int)
+
+GET         /createperson                         controllers.ApplicationMongo.create
+GET         /findperson                           controllers.ApplicationMongo.findByName
+
+
+# Comet
+
+GET         /comet                                controllers.Application.cometString
+GET         /cometjs                              controllers.Application.cometJson
+
+GET         /scala/comet                          controllers.Application.clocker()
+GET         /scala/comet/liveClock                controllers.Application.streamClock()
+
+# Upload
+
+POST        /upload                               controllers.Application.upload
+
+
+#POST    /something                              controllers.Application.someCreate()
+#GET     /something/:id                          controllers.Application.someEdit(id:String)
+#POST    /something/:id                          controllers.Application.someUpdate(id:String)
+#POST    /something/:id                          controllers.Application.someDelete(id:String)

@@ -1,0 +1,25 @@
+@(message: String)
+
+@main("Cookies For you!") {
+
+    <h1>A Cookie has been made just for you</h1>
+    <br>
+
+    <br>
+    <h1 style="color: red;
+        text-align: center;
+        font-size: 300%">@message</h1>
+    <br>
+    <div align="center">
+        <img class="img-responsive" src="@routes.Assets.at("images/baking.gif")">
+    </div>
+    <ul>
+        <br>
+        <li><a href="/">Take me back to the home page</a></li>
+        <br>
+        <li><a href="http://localhost:9000/showmethecookie">Show me the Cookie</a></li>
+        <br>
+        <li><a href="http://localhost:9000/eatcookie">Eat the Cookie</a></li>
+        <br>
+    </ul>
+}

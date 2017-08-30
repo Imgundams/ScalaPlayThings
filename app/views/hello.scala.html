@@ -1,38 +1,24 @@
-@(name :String)
+@(name:String)
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hello</title>
-</head>
-<body>
-    <div>
-        <h1>HTTP Error 404</h1>
-    </div>
-    <div>
-        <h4>For Oh For: Not found</h4>
-    </div>
+    @main("Hello") {
+        <script>
+            function nameFunction() {
+                var n;
+                n = document.getElementById("name").value;
+                if (n =="") n = "Stranger";
+                window.location = "http://localhost:9000/hello/"+n;
+            }
+        </script>
 
-    <div>
-        <p>
-            Can't find what you are looking for.
-        </p>
+        <h1>Hello</h1>
 
+        <br><h1 style="color: #08b00c;text-align:center;font-size:300%">@name</h1>
+        <br>
+        <body>Is that not your name? If that isn't your name enter it in here:</body>
 
-        <p>
-            <a href="@routes.Application.index()">Go to the home page<br></a>
-            <a href="https://www.google.co.uk/maps">Go home.</a>
-        </p>
-    </div>
-    <div align="center">
-        <img src="@routes.Assets.at("images/err404.jpg")">
-    </div>
+        <input id="name">
+        <button type="button" onclick="nameFunction()">Submit</button>
 
-</body>
-</html>
+        <a href="/">Take me back to the home page</a>
 
-
-
-
-}
+    }
